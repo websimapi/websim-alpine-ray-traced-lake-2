@@ -166,11 +166,10 @@ export class Player {
             // 3D Underwater Movement (Orientation based)
             // Get camera forward direction
             const camForward = new THREE.Vector3();
-            const camRight = new THREE.Vector3();
             camera.getWorldDirection(camForward);
             
-            // Right vector is cross product of Forward and Up
-            camRight.crossVectors(camForward, new THREE.Vector3(0,1,0)).normalize();
+            // Use local camera Right vector to avoid gimbal lock and inversion when looking down
+            const camRight = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
 
             if (this.keys.w) moveDir.add(camForward);
             if (this.keys.s) moveDir.sub(camForward);
