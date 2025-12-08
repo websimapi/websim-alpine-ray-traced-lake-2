@@ -45,6 +45,7 @@ export class WaterSystem {
         this.water.rotation.x = -Math.PI / 2;
         this.water.position.y = -2; 
         this.water.material.side = THREE.FrontSide; // Only render top to prevent z-fighting
+        this.water.receiveShadow = false; // Disable shadows on water surface to prevent flickering/acne
         
         this.scene.add(this.water);
 
@@ -114,7 +115,7 @@ export class WaterSystem {
 
         this.underWaterMesh = new THREE.Mesh(underGeo, underMat);
         this.underWaterMesh.rotation.x = -Math.PI / 2;
-        this.underWaterMesh.position.y = -2;
+        this.underWaterMesh.position.y = -1.95; // Slightly offset from surface to prevent Z-fighting
         this.scene.add(this.underWaterMesh);
     }
 
