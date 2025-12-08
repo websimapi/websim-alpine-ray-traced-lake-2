@@ -15,6 +15,14 @@ export class WaterSystem {
 
         const waterGeometry = new THREE.PlaneGeometry(10000, 10000);
 
+        // Scale UVs so the normal map repeats instead of stretching over the entire 10km area
+        // This fixes the "weird" giant ripple look
+        const uvAttribute = waterGeometry.attributes.uv;
+        const uvScale = 500; 
+        for (let i = 0; i < uvAttribute.count; i++) {
+            uvAttribute.setXY(i, uvAttribute.getX(i) * uvScale, uvAttribute.getY(i) * uvScale);
+        }
+
         this.water = new Water(
             waterGeometry,
             {
@@ -23,9 +31,10 @@ export class WaterSystem {
                 waterNormals: normalMap,
                 sunDirection: new THREE.Vector3(),
                 sunColor: 0xffffff,
-                waterColor: 0x004a6f, // Lighter teal/blue for transparency
-                distortionScale: 2.0, // Smoother ripples
-                fog: this.scene.fog !== undefined
+                waterColor: 0x004a6f, 
+                distortionScale: 3.7, 
+                fog: this.scene.fog !== undefined,
+                alpha: 0.6 // Semi-transparent
             }
         );
 

@@ -169,9 +169,8 @@ export class Player {
             const camRight = new THREE.Vector3();
             camera.getWorldDirection(camForward);
             
-            // Right vector is cross product of Up and Forward
-            camRight.crossVectors(camera.up, camForward).normalize(); // Actually this might be inverted depending on camera up
-            camRight.crossVectors(camForward, new THREE.Vector3(0,1,0)).negate().normalize(); 
+            // Right vector is cross product of Forward and Up
+            camRight.crossVectors(camForward, new THREE.Vector3(0,1,0)).normalize();
 
             if (this.keys.w) moveDir.add(camForward);
             if (this.keys.s) moveDir.sub(camForward);
